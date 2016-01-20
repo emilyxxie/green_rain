@@ -1,3 +1,5 @@
+// todo: add more symbols, numbers and letters
+
 var symbols = [];
 
 function setup() {
@@ -27,19 +29,30 @@ function setup() {
 function draw() {
   background(0);
   for (var i = 0; i < symbols.length; i++) {
+
     var symbol = symbols[i];
 
     fill(symbol.r, symbol.g, symbol.b);
-    textSize(18);
+    textSize(24);
+
+    if (!symbol.convert && symbol.convertInterval == 400) {
+      symbol.character = String.fromCharCode(
+        0x30A0 + Math.random() * (0x30FF-0x30A0+1)
+      );
+      symbol.convertInterval = Math.round(random(0, 200));
+    }
+
     text(symbol.character, symbol.x, symbol.y);
     symbol.scroll();
+    symbol.convertInterval++;
+
   }
 }
 
 function Symbol(x, y, r, g, b) {
   this.character = String.fromCharCode(
     0x30A0 + Math.random() * (0x30FF-0x30A0+1)
-  ); // '\u30A1';
+  );
   this.x = x;
   this.y = y;
 
@@ -47,8 +60,10 @@ function Symbol(x, y, r, g, b) {
   this.g = g;
   this.b = b;
 
-  this.velocity = 0;
-  this.velocityIncrement = random(0, 0.01);
+  // if this is the first number, always have it convert.
+  this.convert = y.start ? Math.round(random(0, 5)) : 0; 
+  // set the pace at which it converts
+  this.convertInterval = Math.round(random(0, 400));
 
   this.scroll = function() {
     this.y += 1.8;
