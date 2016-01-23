@@ -21,19 +21,19 @@ function draw() {
     fill(symbol.r, symbol.g, symbol.b);
     textSize(24);
     text(symbol.character, symbol.x, symbol.y);
-    symbol.scroll();
     symbol.convertSymbol();
+    symbol.scroll();
+    symbol.convertInterval++;
   }
 }
 
 function createSymbolStream() {
-  var yStart = 0;
   var xStart = 0;
-
+  var yStart = 0;
   for (var j = 0; j < width / 24; j++) {
-    startG = g;
-    startB = b;
-    for (var i = 0; i < random(15, 40); i++) {
+    var startG = g;
+    var startB = b;
+    for (var i = 0; i < random(15, 200); i++) {
       if (yStart == 0) {
         symbols.push(
           new Symbol(xStart, yStart, 255, 255, 255)
