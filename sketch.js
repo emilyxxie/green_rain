@@ -2,56 +2,75 @@
 var symbols = [];
 var g = 200;
 var b = 60;
-var symbolsLength;
+// var symbolsLength;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
+
   background(0);
-  createSymbolStream();
-  // set global variable for performance - prevents 
-  // checking length every iteration in draw()
+  xStart = 0;
+  createSymbolStream(xStart, g, b);
   symbolsLength = symbols.length;
 }
 
 function draw() {
-  console.log(symbols.length);
+  // console.log(symbols.length);
   background(0);
   for (var i = 0; i < symbolsLength; i++) {
-    var symbol = symbols[i];
-    fill(symbol.r, symbol.g, symbol.b);
-    textSize(24);
-    text(symbol.character, symbol.x, symbol.y);
-    symbol.convertSymbol();
-    symbol.scroll();
-    symbol.convertInterval++;
+    var stream = symbols[i];
+    var streamLength = stream.length;
+    for (var j = 0; j < streamLength; j++) {
+      var symbol = stream[j];
+      fill(symbol.r, symbol.g, symbol.b);
+      textSize(24);
+      text(symbol.character, symbol.x, symbol.y);
+      symbol.convertSymbol();
+      symbol.scroll();
+      if (symbol.y > height) {
+        symbol.y = 0;
+      }
+      symbol.convertInterval++;
+    }
+      // var symbol = symbols[i];
+      // fill(symbol.r, symbol.g, symbol.b);
+      // textSize(24);
+      // text(symbol.character, symbol.x, symbol.y);
+      // symbol.convertSymbol();
+      // symbol.scroll();
+      // // if (symbol.y > height) {
+      // //   // resetSymbolStream();
+      // // }
+      // symbol.convertInterval++;
   }
 }
 
-function createSymbolStream() {
-  var xStart = 0;
-  var yStart = 0;
-  for (var j = 0; j < width / 24; j++) {
-    var startG = g;
-    var startB = b;
-    for (var i = 0; i < random(15, 200); i++) {
-      if (yStart == 0) {
-        symbols.push(
-          new Symbol(xStart, yStart, 255, 255, 255)
-        );
-      } else {
-        symbols.push(
-          new Symbol(xStart, yStart, 0, g, b)
-        );
-        g -= 8;
-        b -= 8;
-      }
-      yStart -= 24;
+// function appendSymbolStream(i, j) {
+//   arrasymbols[i];
+// }
+
+// function resetSymbolStream(i, j) {
+//   symbols[i].splice(0, 1);
+// }
+
+function createSymbolStream(xStart, g, b) {
+  var yStart = random();
+  var stream = [];
+  for (var i = 0; i < random(15, 200); i++) {
+    // create a 2D array
+    if (yStart == 0) {
+      stream.push(
+        new Symbol(xStart, yStart, 255, 255, 255)
+      );
+    } else {
+      stream.push(
+        new Symbol(xStart, yStart, 0, g, b)
+      );
+      g -= 8;
+      b -= 8;
     }
-    g = startG;
-    b = startB;
-    xStart += 24;
-    yStart = 0;
+    yStart -= 24;
   }
+  symbols.push(stream);
 }
 
 
@@ -72,7 +91,7 @@ function Symbol(x, y, r, g, b) {
   this.convertInterval = Math.round(random(0, 400));
 
   this.scroll = function() {
-    this.y += 8;
+    this.y += 1.8;
   }
 
   this.convertSymbol = function() {
@@ -83,6 +102,7 @@ function Symbol(x, y, r, g, b) {
       this.convertInterval = Math.round(random(0, 200));
     }
   }
+
 }
 
 
