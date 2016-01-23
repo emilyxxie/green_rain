@@ -6,39 +6,55 @@ var b = 60;
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
   background(0);
-  var yStart = 0;
-
-  for (var i = 0; i < random(15, 40); i++) {
-    if (yStart == 0) {
-      symbols.push(
-        new Symbol(10, yStart, 255, 255, 255)
-      );
-    } else {
-      symbols.push(
-        new Symbol(10, yStart, 0, g, b)
-      );
-      g -= 8;
-      b -= 8;
-    }
-    yStart -= 22;
-  }
+  createSymbolStream();
+  // set global variable for performance - prevents 
+  // checking length every iteration in draw()
+  symbolsLength = symbols.length;
 }
 
 function draw() {
   background(0);
-  for (var i = 0; i < symbols.length; i++) {
 
-    var symbol = symbols[i];
-
+  for (var j = 0; j < 40; j++) { 
     fill(symbol.r, symbol.g, symbol.b);
     textSize(24);
-    symbol.convertSymbol();
-    text(symbol.character, symbol.x, symbol.y);
-    symbol.scroll();
-    symbol.convertInterval++;
-
+    var symbol = symbols[j];
+    text(symbol.character);
+    for (var i = 0; i < symbolsLength; i++) {
+      // var symbol = symbols[i];
+      // fill(symbol.r, symbol.g, symbol.b);
+      // textSize(24);
+      // text(symbol.character, symbol.x, symbol.y);
+      // symbol.convertSymbol();
+      // symbol.scroll();
+      // symbol.convertInterval++;
+    }
   }
 }
+
+function createSymbolStream() {
+  var yStart = 0;
+  var xStart = 0;
+
+  // set up a line of symbols
+  for (var i = 0; i < random(15, 40); i++) {
+    if (yStart == 0) {
+      symbols.push(
+        new Symbol(xStart, yStart, 255, 255, 255)
+      );
+    } else {
+      symbols.push(
+        new Symbol(xStart, yStart, 0, g, b)
+      );
+      g -= 8;
+      b -= 8;
+    }
+    yStart -= 24;
+  }
+  xStart += 24;
+  yStart = 0;
+}
+
 
 function Symbol(x, y, r, g, b) {
   this.character = String.fromCharCode(
@@ -57,7 +73,7 @@ function Symbol(x, y, r, g, b) {
   this.convertInterval = Math.round(random(0, 400));
 
   this.scroll = function() {
-    this.y += 2.8;
+    this.y += 2;
   }
 
   this.convertSymbol = function() {
