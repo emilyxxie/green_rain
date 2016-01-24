@@ -3,13 +3,9 @@ var g = 200;
 var b = 60;
 var colorFadeInterval = 8;
 var symbolSize = 24;
-var previousCanvasHeight;
 
 function setup() {
   createCanvas(screen.availWidth, screen.availHeight);
-  // store canvas height and width for resize
-  previousCanvasWidth = window.innerWidth;
-
   background(0);
   xStart = 0;
   for (var i = 0; i < width / symbolSize; i++) {
