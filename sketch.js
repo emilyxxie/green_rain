@@ -1,14 +1,20 @@
 var symbols = [];
 var g = 200;
 var b = 60;
+var colorFadeInterval = 8;
+var symbolSize = 24;
+var previousCanvasHeight;
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
+  createCanvas(screen.availWidth, screen.availHeight);
+  // store canvas height and width for resize
+  previousCanvasWidth = window.innerWidth;
+
   background(0);
   xStart = 0;
-  for (var i = 0; i < width / 24; i++) {
+  for (var i = 0; i < width / symbolSize; i++) {
     createSymbolStream(xStart, g, b);
-    xStart += 24;
+    xStart += symbolSize;
   }
   symbolsLength = symbols.length;
 }
@@ -19,7 +25,7 @@ function draw() {
     stream.forEach(function (symbol, index) {
       fill(symbol.r, symbol.g, symbol.b);
       textFont("Consolas");
-      textSize(24);
+      textSize(symbolSize);
       text(symbol.character, symbol.x, symbol.y);
       symbol.scroll();
       symbol.convertSymbol();
@@ -32,7 +38,7 @@ function draw() {
 }
 
 function createSymbolStream(xStart, g, b) {
-  var yStart = random(0, 100);
+  var yStart = random(0, 130);
   // create a 2D array
   var stream = [];
   var first = true;
@@ -55,10 +61,10 @@ function createSymbolStream(xStart, g, b) {
       stream.push(
         new Symbol(xStart, yStart, 0, g, b, first, meta)
       );
-      g -= 8;
-      b -= 8;
+      g -= colorFadeInterval;
+      b -= colorFadeInterval;
     }
-    yStart -= 24;
+    yStart -= symbolSize;
   }
   symbols.push(stream);
 }
@@ -105,11 +111,6 @@ function Symbol(x, y, r, g, b, first, meta) {
       this.convertInterval = Math.round(random(0, 100));
     }
   }
-
-  function windowResized() {
-    resizeCanvas(window.innerWidth, window.innerHeight);
-  }
-  
 }
 
 
