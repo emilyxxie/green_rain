@@ -47,7 +47,7 @@ function createSymbolStream(xStart, g, b) {
     scrollSpeed: random(4, 8)
   };
 
-  for (var i = 0; i < random(5, 40); i++) {
+  for (var i = 0; i < random(5, 100); i++) {
     // create a 2D array
     if (first) {
       stream.push(
@@ -58,19 +58,31 @@ function createSymbolStream(xStart, g, b) {
       stream.push(
         new Symbol(xStart, yStart, 0, g, b, first, meta)
       );
-      g -= 8;
-      b -= 8;
+      g -= 10;
+      b -= 10;
     }
     yStart -= 24;
   }
   symbols.push(stream);
 }
 
+function generateRandomSymbol() {
+  var charOrNum = random(0, 100);
+  if (charOrNum > 5) {
+    // create a Katana unicode character
+    return String.fromCharCode(
+      0x30A0 + Math.random() * (0x30FF-0x30A0+1)
+    );
+  } else {
+    // set it to numeric
+    return round(random(0,9));
+  }
+}
 
 function Symbol(x, y, r, g, b, first, meta) {
-  this.character = String.fromCharCode(
-    0x30A0 + Math.random() * (0x30FF-0x30A0+1)
-  );
+
+  this.character = generateRandomSymbol();
+
   this.x = x;
   this.y = y;
 
@@ -83,21 +95,19 @@ function Symbol(x, y, r, g, b, first, meta) {
   // if this is the first number, always have it convert.
   this.convert = first ? 0 : Math.round(random(0, 1)); 
   // set the pace at which it converts
-  this.convertInterval = Math.round(random(0, 400));
+  this.convertInterval = Math.round(random(0, 100));
 
   this.scroll = function() {
-    // this.y += 1.8;
     this.y += this.meta.scrollSpeed;
   }
 
   this.convertSymbol = function() {
-    if (!this.convert && this.convertInterval == 400) {
-      this.character = String.fromCharCode(
-        0x30A0 + Math.random() * (0x30FF-0x30A0+1)
-      );
-      this.convertInterval = Math.round(random(0, 200));
+    if (!this.convert && this.convertInterval == 100) {
+      this.character = generateRandomSymbol();
+      this.convertInterval = Math.round(random(0, 100));
     }
   }
+
 
 }
 
