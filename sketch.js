@@ -1,16 +1,12 @@
-// todo: add more symbols, numbers and letters
 var symbols = [];
 var g = 200;
 var b = 60;
-// var symbolsLength;
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
-
   background(0);
   xStart = 0;
   for (var i = 0; i < width / 24; i++) {
-  // for (var i = 0; i < 2; i++) {
     createSymbolStream(xStart, g, b);
     xStart += 24;
   }
@@ -22,6 +18,7 @@ function draw() {
   symbols.forEach(function (stream, index) {
     stream.forEach(function (symbol, index) {
       fill(symbol.r, symbol.g, symbol.b);
+      textFont("Consolas");
       textSize(24);
       text(symbol.character, symbol.x, symbol.y);
       symbol.scroll();
@@ -36,19 +33,19 @@ function draw() {
 
 function createSymbolStream(xStart, g, b) {
   var yStart = random(0, 100);
+  // create a 2D array
   var stream = [];
   var first = true;
 
   // set stream meta data for each symbol
   var streamStart = yStart;
-  // var scrollSpeed = 
   var meta = {
     streamStart: streamStart,
     scrollSpeed: random(5, 10)
   };
 
   for (var i = 0; i < random(5, 100); i++) {
-    // create a 2D array
+    // set first character white
     if (first) {
       stream.push(
         new Symbol(xStart, yStart, 255, 255, 255, first, meta)
@@ -58,8 +55,8 @@ function createSymbolStream(xStart, g, b) {
       stream.push(
         new Symbol(xStart, yStart, 0, g, b, first, meta)
       );
-      g -= 10;
-      b -= 10;
+      g -= 8;
+      b -= 8;
     }
     yStart -= 24;
   }
@@ -69,7 +66,7 @@ function createSymbolStream(xStart, g, b) {
 function generateRandomSymbol() {
   var charOrNum = random(0, 100);
   if (charOrNum > 5) {
-    // create a Katana unicode character
+    // create a Katakana unicode character
     return String.fromCharCode(
       0x30A0 + Math.random() * (0x30FF-0x30A0+1)
     );
@@ -80,21 +77,22 @@ function generateRandomSymbol() {
 }
 
 function Symbol(x, y, r, g, b, first, meta) {
-
   this.character = generateRandomSymbol();
 
+  // set draw positions
   this.x = x;
   this.y = y;
 
+  // set rgb color values
   this.r = r;
   this.g = g;
   this.b = b;
 
+  // set meta data for stream
   this.meta = meta;
 
   // if this is the first number, always have it convert.
   this.convert = first ? 0 : Math.round(random(0, 1)); 
-  // set the pace at which it converts
   this.convertInterval = Math.round(random(0, 100));
 
   this.scroll = function() {
@@ -108,7 +106,10 @@ function Symbol(x, y, r, g, b, first, meta) {
     }
   }
 
-
+  function windowResized() {
+    resizeCanvas(window.innerWidth, window.innerHeight);
+  }
+  
 }
 
 
