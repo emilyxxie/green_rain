@@ -9,61 +9,54 @@ function setup() {
 
   background(0);
   xStart = 0;
-  createSymbolStream(xStart, g, b);
+  for (var i = 0; i < width / 24; i++) {
+  // for (var i = 0; i < 2; i++) {
+    createSymbolStream(xStart, g, b);
+    xStart += 24;
+  }
   symbolsLength = symbols.length;
 }
 
 function draw() {
-  // console.log(symbols.length);
   background(0);
-  for (var i = 0; i < symbolsLength; i++) {
-    var stream = symbols[i];
-    var streamLength = stream.length;
-    for (var j = 0; j < streamLength; j++) {
-      var symbol = stream[j];
+  symbols.forEach(function (stream, index) {
+    stream.forEach(function (symbol, index) {
       fill(symbol.r, symbol.g, symbol.b);
       textSize(24);
       text(symbol.character, symbol.x, symbol.y);
-      symbol.convertSymbol();
       symbol.scroll();
-      if (symbol.y > height) {
-        symbol.y = 0;
-      }
+      symbol.convertSymbol();
       symbol.convertInterval++;
-    }
-      // var symbol = symbols[i];
-      // fill(symbol.r, symbol.g, symbol.b);
-      // textSize(24);
-      // text(symbol.character, symbol.x, symbol.y);
-      // symbol.convertSymbol();
-      // symbol.scroll();
-      // // if (symbol.y > height) {
-      // //   // resetSymbolStream();
-      // // }
-      // symbol.convertInterval++;
-  }
+      if (symbol.y > height) {
+        symbol.y = symbol.meta.streamStart;
+      }
+    });
+  });
 }
 
-// function appendSymbolStream(i, j) {
-//   arrasymbols[i];
-// }
-
-// function resetSymbolStream(i, j) {
-//   symbols[i].splice(0, 1);
-// }
-
 function createSymbolStream(xStart, g, b) {
-  var yStart = random();
+  var yStart = random(0, 100);
   var stream = [];
-  for (var i = 0; i < random(15, 200); i++) {
+  var first = true;
+
+  // set stream meta data for each symbol
+  var streamStart = yStart;
+  // var scrollSpeed = 
+  var meta = {
+    streamStart: streamStart,
+    scrollSpeed: random(4, 8)
+  };
+
+  for (var i = 0; i < random(5, 40); i++) {
     // create a 2D array
-    if (yStart == 0) {
+    if (first) {
       stream.push(
-        new Symbol(xStart, yStart, 255, 255, 255)
+        new Symbol(xStart, yStart, 255, 255, 255, first, meta)
       );
+      first = false;
     } else {
       stream.push(
-        new Symbol(xStart, yStart, 0, g, b)
+        new Symbol(xStart, yStart, 0, g, b, first, meta)
       );
       g -= 8;
       b -= 8;
@@ -74,7 +67,7 @@ function createSymbolStream(xStart, g, b) {
 }
 
 
-function Symbol(x, y, r, g, b) {
+function Symbol(x, y, r, g, b, first, meta) {
   this.character = String.fromCharCode(
     0x30A0 + Math.random() * (0x30FF-0x30A0+1)
   );
@@ -85,13 +78,16 @@ function Symbol(x, y, r, g, b) {
   this.g = g;
   this.b = b;
 
+  this.meta = meta;
+
   // if this is the first number, always have it convert.
-  this.convert = y.start ? Math.round(random(0, 5)) : 0; 
+  this.convert = first ? 0 : Math.round(random(0, 1)); 
   // set the pace at which it converts
   this.convertInterval = Math.round(random(0, 400));
 
   this.scroll = function() {
-    this.y += 1.8;
+    // this.y += 1.8;
+    this.y += this.meta.scrollSpeed;
   }
 
   this.convertSymbol = function() {
