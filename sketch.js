@@ -44,7 +44,7 @@ function createSymbolStream(xStart, g, b) {
   // var scrollSpeed = 
   var meta = {
     streamStart: streamStart,
-    scrollSpeed: random(4, 8)
+    scrollSpeed: random(5, 10)
   };
 
   for (var i = 0; i < random(5, 100); i++) {
