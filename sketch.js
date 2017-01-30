@@ -1,112 +1,99 @@
-var symbols = [];
-var g = 200;
-var b = 60;
-var colorFadeInterval = 8;
-var symbolSize = 24;
+var symbolStreams = [];
+var symbolSize = 14;
+var fadeInterval = 1.6;
 
 function setup() {
-  createCanvas(screen.availWidth, screen.availHeight);
+  createCanvas(
+    window.innerWidth,
+    window.innerHeight
+  );
   background(0);
-  xStart = 0;
-  for (var i = 0; i < width / symbolSize; i++) {
-    createSymbolStream(xStart, g, b);
-    xStart += symbolSize;
-  }
-  symbolsLength = symbols.length;
+
+  createSymbolStreams();
+  textFont('Consolas');
+  textSize(symbolSize);
 }
 
 function draw() {
-  background(0);
-  symbols.forEach(function (stream, index) {
-    stream.forEach(function (symbol, index) {
-      fill(symbol.r, symbol.g, symbol.b);
-      textFont("Consolas");
-      textSize(symbolSize);
-      text(symbol.character, symbol.x, symbol.y);
-      symbol.scroll();
-      symbol.convertSymbol();
-      symbol.convertInterval++;
-      if (symbol.y > height) {
-        symbol.y = symbol.meta.streamStart;
-      }
-    });
+  // make background semi-opaque to lend a slightly "blurry" feeling
+  background(0, 170);
+  symbolStreams.forEach(function (symbolStream) {
+    symbolStream.render();
   });
 }
 
-function createSymbolStream(xStart, g, b) {
-  var yStart = random(0, 130);
-  // create a 2D array
-  var stream = [];
-  var first = true;
+function createSymbolStreams() {
+  xStart = 0;
+  yStart = random(-100, 0);
+  for (var i = 0; i <= width / symbolSize; i++) {
+    symbolStream = new SymbolStream(xStart, yStart);
+    symbolStream.addSymbols();
+    symbolStreams.push(symbolStream);
+    xStart += symbolSize;
+  }
+}
 
-  // set stream meta data for each symbol
-  var streamStart = yStart;
-  var meta = {
-    streamStart: streamStart,
-    scrollSpeed: random(5, 10)
-  };
+function SymbolStream(x, y) {
+  this.speed = random(5, 22);
+  this.totalSymbols = round(random(5, 30));
+  this.symbols = [];
 
-  for (var i = 0; i < random(5, 100); i++) {
-    // set first character white
-    if (first) {
-      stream.push(
-        new Symbol(xStart, yStart, 255, 255, 255, first, meta)
-      );
+  this.addSymbols = function() {
+    var opacity = 255;
+    var first = boolean(round(random(0, 1)));
+    for (var i = 0; i <= this.totalSymbols; i++) {
+      symbol = new Symbol(x, y, opacity, this.speed, first);
+      symbol.getRandomSymbol();
+      this.symbols.push(symbol);
+      y -= symbolSize;
+      opacity -= (255 / this.totalSymbols) / fadeInterval
       first = false;
-    } else {
-      stream.push(
-        new Symbol(xStart, yStart, 0, g, b, first, meta)
-      );
-      g -= colorFadeInterval;
-      b -= colorFadeInterval;
     }
-    yStart -= symbolSize;
   }
-  symbols.push(stream);
+
+  this.render = function() {
+    r = 0;
+    g = 255;
+    b = 65;
+    this.symbols.forEach(function (symbol) {
+      if (symbol.first) {
+        fill(140, 255, 170, symbol.opacity);
+      } else {
+        fill(r, g, b, symbol.opacity);
+      }
+      text(symbol.symbol, symbol.x, symbol.y);
+      symbol.rain();
+      symbol.getRandomSymbol();
+    });
+  }
 }
 
-function generateRandomSymbol() {
-  var charOrNum = random(0, 100);
-  if (charOrNum > 5) {
-    // create a Katakana unicode character
-    return String.fromCharCode(
-      0x30A0 + Math.random() * (0x30FF-0x30A0+1)
-    );
-  } else {
-    // set it to numeric
-    return round(random(0,9));
-  }
-}
-
-function Symbol(x, y, r, g, b, first, meta) {
-  this.character = generateRandomSymbol();
-
-  // set draw positions
+function Symbol(x, y, opacity, speed, first) {
   this.x = x;
   this.y = y;
 
-  // set rgb color values
-  this.r = r;
-  this.g = g;
-  this.b = b;
+  this.opacity = opacity;
+  this.speed = speed;
+  this.switchInterval = round(random(2, 30));
+  this.symbol;
+  this.first = first;
 
-  // set meta data for stream
-  this.meta = meta;
-
-  // if this is the first number, always have it convert.
-  this.convert = first ? 0 : Math.round(random(0, 1)); 
-  this.convertInterval = Math.round(random(0, 100));
-
-  this.scroll = function() {
-    this.y += this.meta.scrollSpeed;
+  this.rain = function() {
+    this.y = (this.y >= height) ? 0 : this.y + speed;
   }
 
-  this.convertSymbol = function() {
-    if (!this.convert && this.convertInterval == 100) {
-      this.character = generateRandomSymbol();
-      this.convertInterval = Math.round(random(0, 100));
+  this.getRandomSymbol = function() {
+    if (frameCount % this.switchInterval == 0 || frameCount == 0) {
+      var katakana = round(random(0, 5));
+      if (katakana > 1) {
+      // create a Katakana unicode character
+        this.symbol = String.fromCharCode(
+          0x30A0 + Math.random() * (0x30FF-0x30A0+1)
+        );
+      } else {
+        // set it to numeric
+        this.symbol = round(random(0,9));
+      }
     }
   }
 }
-
-
