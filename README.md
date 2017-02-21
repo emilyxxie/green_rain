@@ -1,7 +1,7 @@
 # green_rain
 A simple recreation of the digital rain sequence from the Matrix.
 
-See here:
+Deployed here:
 http://xie-emily.com/code_art/green_rain.html
 
 
