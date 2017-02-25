@@ -11,3 +11,5 @@ https://www.youtube.com/watch?v=S1TQCi9axzg
 
 # Made your own version?
 If you followed my tutorial and made your own version of the Matrix, I'd love to display it here for everyone to see! Submit a pull request linking to it below. :-)
+
+[Kurt Schwind (@kurtschwind)](http://codepen.io/Discordanian/full/ZeEyyy/)
