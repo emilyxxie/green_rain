@@ -13,3 +13,4 @@ http://xie-emily.com/generative_art/green_rain.html
 If you followed my tutorial and made your own version of the Matrix, I'd love to display it here for everyone to see! Submit a pull request linking to it below, including your name and any social media accounts. :-)
 
 * [Kurt Schwind (twitter: @kurtschwind)](http://codepen.io/Discordanian/full/ZeEyyy/)
+* [Justin Sexton](https://github.com/JSextonn/MatrixRain)
