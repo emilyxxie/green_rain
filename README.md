@@ -15,3 +15,4 @@ If you followed my tutorial and made your own version of the Matrix, I'd love to
 * [Kurt Schwind (twitter: @kurtschwind)](http://codepen.io/Discordanian/full/ZeEyyy/)
 * [Justin Sexton](https://github.com/JSextonn/MatrixRain)
 * [Javier Amian (twitter: @JavierAmian)](https://www.openprocessing.org/sketch/408655)
+* [Christer Nilsson](https://github.com/ChristerNilsson/Lab/blob/master/2017/018-Green%20Rain/sketch.coffee)
