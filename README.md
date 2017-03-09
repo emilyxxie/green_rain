@@ -10,10 +10,10 @@ My final version deployed here:
 http://xie-emily.com/generative_art/green_rain.html
 
 ## Made your own version?
-If you followed my tutorial and made your own version of the Matrix, I'd love to display it here for everyone to see! Submit a pull request linking to it below, including your name and any social media accounts. :-)
+If you followed the tutorial and made your own version of the Matrix, I'd love to display it here for everyone to see! Submit a pull request linking to it below, including your name and any social media accounts, and a brief description. :-)
 
 * [Kurt Schwind (twitter: @kurtschwind)](http://codepen.io/Discordanian/full/ZeEyyy/)
-* [Justin Sexton](https://github.com/JSextonn/MatrixRain)
-* [Javier Amian (twitter: @JavierAmian)](https://www.openprocessing.org/sketch/408655)
-* [Christer Nilsson](https://github.com/ChristerNilsson/Lab/blob/master/2017/018-Green%20Rain/sketch.coffee)
-* [Jorge Moreno (twitter: @alterebro)](http://codepen.io/alterebro/details/RpWZvw/)
+* [Justin Sexton](https://github.com/JSextonn/MatrixRain) - Tools for custom Matrix
+* [Javier Amian (twitter: @JavierAmian)](https://www.openprocessing.org/sketch/408655) - Processing version
+* [Christer Nilsson](https://github.com/ChristerNilsson/Lab/blob/master/2017/018-Green%20Rain/sketch.coffee) - Using CoffeeScript
+* [Jorge Moreno (twitter: @alterebro)](http://codepen.io/alterebro/details/RpWZvw/) - Raining Emojis
