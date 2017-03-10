@@ -17,3 +17,4 @@ If you followed the tutorial and made your own version of the Matrix, I'd love t
 * [Javier Amian (twitter: @JavierAmian)](https://www.openprocessing.org/sketch/408655) - Processing version
 * [Christer Nilsson](https://github.com/ChristerNilsson/Lab/blob/master/2017/018-Green%20Rain/sketch.coffee) - Using CoffeeScript
 * [Jorge Moreno (twitter: @alterebro)](http://codepen.io/alterebro/details/RpWZvw/) - Raining Emojis
+* [Brian New (twitter: @HenRed @thinmanballad)](http://codepen.io/RedHenDev/full/GWrvKo/) - whatisthematrix (move mouse to highlight glyphs)
