@@ -8,7 +8,7 @@ function setup() {
     window.innerHeight
   );
   background(0);
-  frameRate(15);
+  // frameRate(15);
 
   var x = 0;
   for (var i = 0; i <= width / symbolSize; i++) {
@@ -43,34 +43,35 @@ function Symbol(x, y, speed, first, opacity) {
 Symbol.prototype = {
   setToRandomSymbol: function(highlightIndex, currentIndex, tail, currentValue) {
     var charType = round(random(2000));
-    var throwInBlankInTail = random(100) > 99;
-  
       
-    if (currentIndex <= highlightIndex + tail && currentIndex >= highlightIndex && !throwInBlankInTail){
+    if (currentIndex <= highlightIndex + tail && currentIndex >= highlightIndex){
       //show something
 
-      if (charType > 4 && currentValue != ' '){
+      if (charType > 5 && currentValue != ' '){
         //stay the same
         this.value = currentValue;
 
-      } else if (charType > 3) {
+      } else if (charType > 4) {
         // set it to Katakana
         this.value = String.fromCharCode(
           0x30A0 + round(random(0, 96))
         );
 
-      } else if (charType > 2){
+      } else if (charType > 3){
         //ruuuusski
         this.value = String.fromCharCode(
           0x0400 + round(random(0, 96))
         );
 
-      }else{
+      }else if (charType > 2){
         // set it to numeric
         this.value = round(random(0, 9));
+      }else{
+
+        this.value = ' ';
       }
 
-    } else if ( currentIndex < highlightIndex || currentIndex > highlightIndex + tail || throwInBlankInTail){
+    } else if ( currentIndex < highlightIndex || currentIndex > highlightIndex + tail){
       this.value = ' ';
     }
   }
@@ -124,7 +125,7 @@ Stream.prototype = {
     }
 
     // this subtraction value controls the speed of the decending lighter symbols
-    this.highlightedIndex = this.highlightedIndex -.9;
+    this.highlightedIndex = this.highlightedIndex -.6;
     // this multiplier controls the delay before returning the highlighted back to the top
     if (this.highlightedIndex < -(this.displayTail * 1.1)) { 
       //reset back to top
@@ -139,7 +140,7 @@ Stream.prototype = {
 
       var maxBrightness = 255;
 
-      if (i < intHightlightIndex + (this.displayTail*0.75)) {
+      if (i < intHightlightIndex + (this.displayTail*0.85)) {
         
         symbol.opacity = maxBrightness;
       }else{
@@ -150,7 +151,8 @@ Stream.prototype = {
       }
 
       if (isHightlighted) {
-        fill(200, 255, 190);
+        // fill(200, 255, 190);
+        fill(255);
       } else {
         fill(0, 255, 70, symbol.opacity);
       }
