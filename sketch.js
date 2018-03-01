@@ -4,11 +4,11 @@ var symbolSize = 40;
 
 function setup() {
   createCanvas(
-    window.innerWidth,
-    window.innerHeight
+  window.innerWidth,
+  window.innerHeight
   );
+
   background(0);
-  // frameRate(15);
 
   var x = 0;
   for (var i = 0; i <= width / symbolSize; i++) {
@@ -72,10 +72,10 @@ Symbol.prototype = {
       }
 
     } else if ( currentIndex < highlightIndex || currentIndex > highlightIndex + tail){
+      //if we're below the hightlighted symbol or we're above the tail of the stream, then show blank.
       this.value = ' ';
     }
   }
-
 };
 
 function Stream() {
@@ -124,11 +124,11 @@ Stream.prototype = {
       }
     }
 
-    // this subtraction value controls the speed of the decending lighter symbols
+    // This subtraction value controls the speed of the decending lighter symbols. Higher value is faster
     this.highlightedIndex = this.highlightedIndex -.6;
-    // this multiplier controls the delay before returning the highlighted back to the top
+    // This multiplier controls the delay before returning the highlighted back to the top
     if (this.highlightedIndex < -(this.displayTail * 1.1)) { 
-      //reset back to top
+      // Reset back to top
       this.setDisplayTail();
       this.highlightedIndex = this.symbols.length
     };  
@@ -138,26 +138,22 @@ Stream.prototype = {
       var intHightlightIndex = Math.floor(this.highlightedIndex);
       var isHightlighted = i == intHightlightIndex;
 
-      var maxBrightness = 255;
-
-      if (i < intHightlightIndex + (this.displayTail*0.85)) {
+      if (i < intHightlightIndex + (this.displayTail-2)) {
         
-        symbol.opacity = maxBrightness;
-      }else{
-
-        var distanceFromHighlight = i - intHightlightIndex;
-        var inverseDistancePercent = 1 - (distanceFromHighlight/10); 
-        symbol.opacity = 180;//(maxBrightness * inverseDistancePercent) * 2;
+        symbol.opacity = 255;
+      }else{ 
+        // Last 2 can fade a bit
+        symbol.opacity = 180;
       }
 
       if (isHightlighted) {
-        // fill(200, 255, 190);
-        fill(255);
+
+        fill(230,255,230);
       } else {
         fill(0, 255, 70, symbol.opacity);
       }
-      text(symbol.value, symbol.x, symbol.y);
-        
+
+      text(symbol.value, symbol.x, symbol.y);  
       symbol.setToRandomSymbol(intHightlightIndex, i, this.displayTail, symbol.value);
 
     };
