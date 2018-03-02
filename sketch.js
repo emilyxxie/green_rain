@@ -86,12 +86,19 @@ function Stream() {
   this.hasBegun = false;
   this.highlightedIndex = random(this.totalSymbols);
   this.setDisplayTail();
+  
+  this.descentSpeed = 0;
+  this.setDescentSpeed();
 }
 
 Stream.prototype = {
 
   setDisplayTail: function() { 
     this.displayTail = random(this.totalSymbols * 0.7,this.totalSymbols * 0.9); 
+  },
+
+  setDescentSpeed: function(){
+    this.descentSpeed = random(0.3,0.6);
   },
 
   generateSymbols: function(x, y) {
@@ -125,11 +132,12 @@ Stream.prototype = {
     }
 
     // This subtraction value controls the speed of the decending lighter symbols. Higher value is faster
-    this.highlightedIndex = this.highlightedIndex -.6;
+    this.highlightedIndex = this.highlightedIndex - this.descentSpeed;
     // This multiplier controls the delay before returning the highlighted back to the top
     if (this.highlightedIndex < -(this.displayTail * random(1.0,1.2))) { 
       // Reset back to top
       this.setDisplayTail();
+      this.setDescentSpeed();
       this.highlightedIndex = this.symbols.length
     };  
     
