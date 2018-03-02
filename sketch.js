@@ -42,28 +42,34 @@ function Symbol(x, y, speed, first, opacity) {
 
 Symbol.prototype = {
   setToRandomSymbol: function(highlightIndex, currentIndex, tailLength, currentValue) {
-    var charType = round(random(2000));
+    var changeType = random(2000);
+    var charType = random(10);
       
     if (currentIndex <= highlightIndex + tailLength && currentIndex >= highlightIndex){
       //show something
 
-      if (charType > 5 && currentValue != ' '){
+      if (changeType > 6 && currentValue != ' '){
         //stay the same
         this.value = currentValue;
 
-      } else if (charType > 4) {
-        // set it to Katakana
+      } else if (charType > 9) {
+        // Arabic
+        this.value = String.fromCharCode(
+          0x0620 + round(random(0, 26))
+        );
+      } else if (charType > 2) {
+        // Katakana
         this.value = String.fromCharCode(
           0x30A0 + round(random(0, 96))
         );
 
-      } else if (charType > 3){
+      } else if (charType > 2){
         //ruuuusski
         this.value = String.fromCharCode(
           0x0400 + round(random(0, 96))
         );
 
-      }else if (charType > 2){
+      }else if (charType > 1){
         // set it to numeric
         this.value = round(random(0, 9));
       }else{
@@ -128,7 +134,7 @@ Stream.prototype = {
         this.hasBegun = true;
         this.highlightedIndex = this.symbols.length;
       }else{
-        this.symbols.forEach(s => {
+        this.symbols.forEach(function (s){
           s.value = ' ';
         });
         return;
@@ -160,7 +166,7 @@ Stream.prototype = {
 
       if (isHightlighted) {
 
-        fill(230,255,230);
+        fill(240,255,240);
       } else {
         fill(0, 255, 70, symbol.opacity);
       }
