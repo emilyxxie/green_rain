@@ -98,7 +98,11 @@ Stream.prototype = {
   },
 
   setDescentSpeed: function(){
-    this.descentSpeed = random(0.3,0.6);
+    if (random(100) > 98) {
+      this.descentSpeed = 1.6;
+    }else{
+      this.descentSpeed = random(0.5,0.9);
+    }
   },
 
   generateSymbols: function(x, y) {
@@ -120,7 +124,7 @@ Stream.prototype = {
   render: function() {
     // stagger start
     if (!this.hasBegun){
-      if (Math.floor(random(80)) == 0){
+      if (Math.floor(random(100)) == 0){
         this.hasBegun = true;
         this.highlightedIndex = this.symbols.length;
       }else{
