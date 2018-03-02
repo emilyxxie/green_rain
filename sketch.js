@@ -41,10 +41,10 @@ function Symbol(x, y, speed, first, opacity) {
 }
 
 Symbol.prototype = {
-  setToRandomSymbol: function(highlightIndex, currentIndex, tail, currentValue) {
+  setToRandomSymbol: function(highlightIndex, currentIndex, tailLength, currentValue) {
     var charType = round(random(2000));
       
-    if (currentIndex <= highlightIndex + tail && currentIndex >= highlightIndex){
+    if (currentIndex <= highlightIndex + tailLength && currentIndex >= highlightIndex){
       //show something
 
       if (charType > 5 && currentValue != ' '){
@@ -71,7 +71,7 @@ Symbol.prototype = {
         this.value = ' ';
       }
 
-    } else if ( currentIndex < highlightIndex || currentIndex > highlightIndex + tail){
+    } else if ( currentIndex < highlightIndex || currentIndex > highlightIndex + tailLength){
       //if we're below the hightlighted symbol or we're above the tail of the stream, then show blank.
       this.value = ' ';
     }
