@@ -127,7 +127,7 @@ Stream.prototype = {
     // This subtraction value controls the speed of the decending lighter symbols. Higher value is faster
     this.highlightedIndex = this.highlightedIndex -.6;
     // This multiplier controls the delay before returning the highlighted back to the top
-    if (this.highlightedIndex < -(this.displayTail * 1.1)) { 
+    if (this.highlightedIndex < -(this.displayTail * random(1.0,1.2))) { 
       // Reset back to top
       this.setDisplayTail();
       this.highlightedIndex = this.symbols.length
