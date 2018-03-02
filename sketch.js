@@ -29,14 +29,11 @@ function draw() {
   });
 }
 
-function Symbol(x, y, speed, first, opacity) {
+function Symbol(x, y) {
   this.x = x;
   this.y = y;
 
-  this.speed = speed;
-  this.first = first;
-  this.opacity = opacity;
-  this.switchInterval = round(random(2, 25));
+  this.opacity = 0;
   this.setToRandomSymbol(0,0,0,' ');
 }
 
@@ -81,6 +78,9 @@ Symbol.prototype = {
       //if we're below the hightlighted symbol or we're above the tail of the stream, then show blank.
       this.value = ' ';
     }
+  },
+  giveHighlight:function(){
+    // rect(this)
   }
 };
 
@@ -116,13 +116,10 @@ Stream.prototype = {
     for (var i =0; i <= this.totalSymbols; i++) {
       var symbol = new Symbol(
         x,
-        y,
-        this.speed,
-        opacity
+        y
       );
       symbol.setToRandomSymbol();
       this.symbols.push(symbol);
-      opacity -= (255 / this.totalSymbols) / fadeInterval;
       y -= symbolSize;
     }
   },
