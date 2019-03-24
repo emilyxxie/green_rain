@@ -1,6 +1,7 @@
 var streams = [];
 var fadeInterval = 1.6;
 var symbolSize = 14;
+var frameCounter = 1;
 
 function setup() {
   createCanvas(
@@ -55,7 +56,10 @@ function Symbol(x, y, speed, first, opacity) {
   }
 
   this.rain = function() {
-    this.y = (this.y >= height) ? 0 : this.y += this.speed;
+    console.log(frameCounter, this.speed)
+    if(frameCounter % this.speed==0){
+      this.y = (this.y >= height) ? 0 : this.y += symbolSize;
+    }
   }
 
 }
@@ -63,7 +67,7 @@ function Symbol(x, y, speed, first, opacity) {
 function Stream() {
   this.symbols = [];
   this.totalSymbols = round(random(5, 35));
-  this.speed = random(5, 22);
+  this.speed = floor(random(5, 30)); // frame skip
 
   this.generateSymbols = function(x, y) {
     var opacity = 255;
@@ -85,6 +89,7 @@ function Stream() {
   }
 
   this.render = function() {
+    frameCounter++;
     this.symbols.forEach(function(symbol) {
       if (symbol.first) {
         fill(140, 255, 170, symbol.opacity);
@@ -95,6 +100,9 @@ function Stream() {
       symbol.rain();
       symbol.setToRandomSymbol();
     });
+    if(frameCounter>=60){
+      frameCounter = 0;
+    }
   }
 }
 
