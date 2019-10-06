@@ -45,11 +45,11 @@ function Symbol(x, y, speed, first, opacity) {
       if (charType > 1) {
         // set it to Katakana
         this.value = String.fromCharCode(
-          0x30A0 + round(random(0, 96))
+          0x30A0 + floor(random(0, 97))
         );
       } else {
         // set it to numeric
-        this.value = round(random(0,9));
+        this.value = floor(random(0,10));
       }
     }
   }
