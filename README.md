@@ -24,4 +24,4 @@ If you followed the tutorial and made your own version of the Matrix, I'd love t
 * [Flightcrank's Version](https://github.com/flightcrank/matrix-rain) - Two diffrent versions coded in C using SDL
 * [Angelo Giacco (twitter: @giaccoangelo)](https://github.com/AngeloGiacco/matrix) - Customisable matrix rain with Chinese characters  and Russian alphabet 
 * [Cahil Foley (twitter: @CahilFoley)](https://codepen.io/cahil/pen/OwEeoe/?editors=0010) - Version with static letter positions
-* [Johann Rehberger (twitter: @wunderwuzzi23)](https://embracethered.com) - Landing page for security blog
+* Johann Rehberger [(twitter: @wunderwuzzi23)](https://twitter.com/wunderwuzzi23) -  [Adjusted green_rain for landing page of security blog](https://embracethered.com)
